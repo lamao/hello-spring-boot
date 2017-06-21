@@ -7,44 +7,38 @@ import org.invenit.hello.utils.registry.config.EntityTypeLookupConfigurationLamb
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
  * @author Vycheslav Mischeryakov (vmischeryakov@gmail.com)
  */
-@Service("dataService")
+@Service
 public class DataServiceImpl implements DataService {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataServiceImpl.class);
 
     @Autowired
-    @Qualifier("dataRespitory")
-    private DataRepository<Data> dataRepository;
+    private DataRepository dataRepository;
 
     private Registry<Function<String, String>> mapping = EntityTypeLookupConfigurationLambda.get();
 
     @Override
-    public boolean persist(String problem) {
-        try {
-            dataRepository.persist(new Data(UUID.randomUUID(), problem));
-            return true;
-        } catch (Exception e) {
-            LOG.error("ERROR SAVING DATA: " + e.getMessage(), e);
-            return false;
-        }
+    public void persist(String problem) {
+        dataRepository.save(new Data(problem));
     }
 
     @Override
     public Set<String> getRandomData() {
-        Set<String> randomData = dataRepository.getRandomData();
-        return randomData.stream()
+        Page<Data> randomData = dataRepository.findAll(new PageRequest(0, 50));
+        return randomData.getContent().stream()
+            .map(Data::getDescription)
             .map((value) -> {
                 Optional<Function<String, String>> mappedValue = mapping.find(value);
                 return mappedValue.isPresent() ? mappedValue.get().apply(value) : value;

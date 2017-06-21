@@ -22,11 +22,13 @@
             url: '/getRandomData',
             data: "",
             success: function (response) {
-                var html = "";
-                $.each(response.data, function (i) {
-                    html = html + response.data[i] + "<br/>";
-                });
-                $('#container').html(html);
+                if (response.data) {
+                    var html = "";
+                    $.each(response.data, function (i) {
+                        html = html + response.data[i] + "<br/>";
+                    });
+                    $('#container').html(html);
+                }
             }
         });
     });

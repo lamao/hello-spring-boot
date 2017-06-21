@@ -26,7 +26,6 @@ public class DataController extends ExceptionHandlerController {
     private static final Logger LOG = LoggerFactory.getLogger(DataController.class);
 
     @Autowired
-    @Qualifier("dataService")
     private DataService dataService;
 
     @RequestMapping(value = "/persist", method = RequestMethod.POST)
