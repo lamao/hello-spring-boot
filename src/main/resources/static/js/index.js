@@ -7,10 +7,10 @@ $(document).ready(function() {
       url: '/getRandomData',
       data: "",
       success: function (response) {
-        if (response.data) {
+        if (response.content) {
           var html = "";
-          $.each(response.data, function (i) {
-            html = html + response.data[i] + "<br/>";
+          $.each(response.content, function (i, it) {
+            html = html.concat([it.code, it.value, it.time, "<br/>"].join(";"));
           });
           $('#container').html(html);
         }
