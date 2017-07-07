@@ -1,5 +1,8 @@
 package org.invenit.hello.service;
 
+import java.sql.Date;
+import java.util.function.Function;
+
 import org.invenit.hello.entity.Data;
 import org.invenit.hello.repostiroty.DataRepository;
 import org.invenit.hello.utils.registry.Registry;
@@ -10,11 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author Vycheslav Mischeryakov (vmischeryakov@gmail.com)
@@ -30,19 +28,13 @@ public class DataServiceImpl implements DataService {
     private Registry<Function<String, String>> mapping = EntityTypeLookupConfigurationLambda.get();
 
     @Override
-    public void persist(String problem) {
-        dataRepository.save(new Data(problem));
+    public void persist(Data data) {
+        data.setTime(new Date(System.currentTimeMillis()));
+        dataRepository.save(data);
     }
 
     @Override
-    public Set<String> getRandomData() {
-        Page<Data> randomData = dataRepository.findAll(new PageRequest(0, 50));
-        return randomData.getContent().stream()
-            .map(Data::getDescription)
-            .map((value) -> {
-                Optional<Function<String, String>> mappedValue = mapping.find(value);
-                return mappedValue.isPresent() ? mappedValue.get().apply(value) : value;
-            })
-            .collect(Collectors.toSet());
+    public Page<Data> getRandomData() {
+        return dataRepository.findAll(new PageRequest(0, 50));
     }
 }

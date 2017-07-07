@@ -1,21 +1,22 @@
 package org.invenit.hello.controller;
 
 import org.invenit.hello.controller.exception.RestException;
+import org.invenit.hello.entity.Data;
 import org.invenit.hello.service.DataService;
-import org.invenit.hello.utils.Ajax;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Vycheslav Mischeryakov (vmischeryakov@gmail.com)
@@ -28,26 +29,26 @@ public class DataController extends ExceptionHandlerController {
     @Autowired
     private DataService dataService;
 
-    @RequestMapping(value = "/persist", method = RequestMethod.POST)
+    @RequestMapping(value = "/persist", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Map<String, Object> persist(@RequestParam("data") String data) throws RestException {
+    public ResponseEntity persist(@RequestBody Data data) throws RestException {
         try {
-            if (data == null || data.equals("")) {
-                return Ajax.emptyResponse();
+            if (data == null) {
+                return ResponseEntity.badRequest().body("Empty content");
             }
             dataService.persist(data);
-            return Ajax.emptyResponse();
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             throw new RestException(e);
         }
     }
 
-    @RequestMapping(value = "/getRandomData", method = RequestMethod.GET)
+    @RequestMapping(value = "/getRandomData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Map<String, Object> getRandomData() throws RestException {
+    @ResponseStatus(HttpStatus.OK)
+    public Page<Data> getRandomData() throws RestException {
         try {
-            Set<String> result = dataService.getRandomData();
-            return Ajax.successResponse(result);
+            return dataService.getRandomData();
         } catch (Exception e) {
             throw new RestException(e);
         }
@@ -59,4 +60,3 @@ public class DataController extends ExceptionHandlerController {
     }
 
 }
-

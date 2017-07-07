@@ -1,13 +1,14 @@
 package org.invenit.hello.service;
 
-import java.util.Set;
+import org.invenit.hello.entity.Data;
+import org.springframework.data.domain.Page;
 
 /**
  * @author Vycheslav Mischeryakov (vmischeryakov@gmail.com)
  */
 public interface DataService {
 
-    void persist(String problem);
+    void persist(Data data);
 
-    Set<String> getRandomData();
+    Page<Data> getRandomData();
 }

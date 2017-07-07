@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Date;
 import java.util.UUID;
 
 /**
@@ -22,13 +23,21 @@ public class Data {
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    private String description;
+    @Column(unique = true, nullable = false)
+    private String code;
+
+    private String value;
+
+    @Column(nullable = false)
+    private Date time;
 
     public Data() {
     }
 
-    public Data(String description) {
-        this.description = description;
+    public Data(String code, String value) {
+        this.code = code;
+        this.value = value;
+        this.time = new Date(System.currentTimeMillis());
     }
 
     public UUID getId() {
@@ -39,11 +48,27 @@ public class Data {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCode() {
+        return code;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
 }

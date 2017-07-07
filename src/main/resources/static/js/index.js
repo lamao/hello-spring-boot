@@ -26,9 +26,12 @@ $(document).ready(function() {
         type: "POST",
         cache: false,
         url: '/persist',
-        data: {
-          'data': $("#data").val()
-        },
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({
+          code: $("#data").val(),
+          value: 'Value of <' + $("#data").val() + '>'
+        }),
         success: function (response) {
           $('#get').click();
         }
