@@ -11,4 +11,6 @@ import java.util.UUID;
  */
 @Repository
 public interface EntityTypeRepository extends JpaRepository<EntityType, UUID> {
+
+    EntityType findByCode(String code);
 }
