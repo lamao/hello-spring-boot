@@ -1,11 +1,14 @@
 $(document).ready(function() {
 
-  $('#get').click(function () {
+  $('#get').click(loadData);
+  $('#post').click(saveData);
+
+  function loadData() {
     $.ajax({
       type: "GET",
       cache: false,
+      dataType: "json",
       url: '/getRandomData',
-      data: "",
       success: function (response) {
         if (response.content) {
           var html = "";
@@ -14,11 +17,12 @@ $(document).ready(function() {
           });
           $('#container').html(html);
         }
-      }
+      },
+      error: processError
     });
-  });
+  }
 
-  $('#post').click(function () {
+  function saveData() {
     if (!$("#data").val()) {
       alert("Enter your data!");
     } else {
@@ -27,17 +31,17 @@ $(document).ready(function() {
         cache: false,
         url: '/persist',
         contentType: 'application/json',
-        dataType: 'json',
         data: JSON.stringify({
           code: $("#data").val(),
-          value: 'Value of <' + $("#data").val() + '>'
+          value: 'Value of [' + $("#data").val() + ']'
         }),
-        success: function (response) {
-          $('#get').click();
-        }
+        success: loadData,
+        error: processError
       });
     }
+  }
 
-  });
-
+  function processError(response) {
+    alert(response.responseText);
+  }
 });

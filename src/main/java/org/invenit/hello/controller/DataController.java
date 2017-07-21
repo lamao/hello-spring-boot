@@ -10,27 +10,31 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Vycheslav Mischeryakov (vmischeryakov@gmail.com)
  */
-@Controller
+@RestController
+@RequestMapping("/")
 public class DataController extends ExceptionHandlerController {
 
     private static final Logger LOG = LoggerFactory.getLogger(DataController.class);
 
-    @Autowired
     private DataService dataService;
 
-    @RequestMapping(value = "/persist", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
+    @Autowired
+    public DataController(DataService dataService) {
+        this.dataService = dataService;
+    }
+
+    @PostMapping(value = "/persist", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity persist(@RequestBody Data data) throws RestException {
         try {
             if (data == null) {
@@ -43,8 +47,7 @@ public class DataController extends ExceptionHandlerController {
         }
     }
 
-    @RequestMapping(value = "/getRandomData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
+    @GetMapping(value = "/getRandomData", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Page<Data> getRandomData() throws RestException {
         try {
@@ -52,11 +55,6 @@ public class DataController extends ExceptionHandlerController {
         } catch (Exception e) {
             throw new RestException(e);
         }
-    }
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView getMainPage() {
-        return new ModelAndView("index.html");
     }
 
 }
