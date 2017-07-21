@@ -8,12 +8,12 @@ $(document).ready(function() {
       type: "GET",
       cache: false,
       dataType: "json",
-      url: '/getRandomData',
+      url: '/api/entity-type',
       success: function (response) {
         if (response.content) {
           var html = "";
           $.each(response.content, function (i, it) {
-            html = html.concat([it.code, it.value, it.time, "<br/>"].join(";"));
+            html = html.concat([it.code, "<br/>"].join(";"));
           });
           $('#container').html(html);
         }
@@ -29,11 +29,10 @@ $(document).ready(function() {
       $.ajax({
         type: "POST",
         cache: false,
-        url: '/persist',
+        url: '/api/entity-type',
         contentType: 'application/json',
         data: JSON.stringify({
-          code: $("#data").val(),
-          value: 'Value of [' + $("#data").val() + ']'
+          code: $("#data").val()
         }),
         success: loadData,
         error: processError

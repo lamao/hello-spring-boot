@@ -10,3 +10,14 @@ create table authorities (
     foreign key (username) references users (username),
     unique (username, authority)
 );
+
+create table entity_type (
+    id uuid not null primary key,
+    code varchar(50) unique
+);
+
+create table entity (
+    id uuid not null primary key,
+    type_id uuid not null,
+    foreign key (type_id) references entity_type(id)
+);
