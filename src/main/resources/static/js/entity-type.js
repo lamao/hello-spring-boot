@@ -5,3 +5,16 @@ app.controller('entityTypeListController', ['$scope', '$http', '$q', 'constants'
     $scope.items = response.data.content;
   });
 }]);
+
+app.controller('entityTypeEditController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+
+  $scope.item = {};
+
+  $scope.onSave = function() {
+    $http.post("/api/entity-type", $scope.item)
+      .then(function(response){
+        $location.path("/entity-types");
+      });
+  };
+
+}]);

@@ -12,6 +12,10 @@ app.config(function($locationProvider, $routeProvider) {
       templateUrl: '/views/entity-type-list.html',
       controller: 'entityTypeListController'
     })
+    .when('/entity-types/add', {
+      templateUrl: '/views/entity-type-edit.html',
+      controller: 'entityTypeEditController'
+    })
     .otherwise(
       { redirectTo: '/'}
     );
