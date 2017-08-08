@@ -1,0 +1,12 @@
+<div class="section">
+    <div class="form-group">
+        <label class="control-label">Type</label>
+        <select class="form-control" ng-model="item.type">
+            <option ng-repeat="entityType in entityTypes" ng-value="entityType">{{::entityType.code}}</option>
+        </select>
+    </div>
+
+    <button class="btn btn-default btn-sm" ng-click="onSave()">
+        <span class="glyphicon glyphicon-save"></span> Save
+    </button>
+</div>
