@@ -11,6 +11,11 @@ create table authorities (
     unique (username, authority)
 );
 
+create table property_definition (
+    id uuid not null primary key,
+    code varchar(50) unique
+);
+
 create table entity_type (
     id uuid not null primary key,
     code varchar(50) unique

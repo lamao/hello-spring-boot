@@ -1,3 +1,7 @@
+insert into property_definition (id, code) values
+(UUID(), 'description'),
+(UUID(), 'value');
+
 insert into entity_type (id, code) values
 (UUID(), 'GAME'),
 (UUID(), 'LOCATION');

@@ -20,6 +20,14 @@ app.config(function($locationProvider, $routeProvider) {
       templateUrl: '/views/entity-type-edit.html',
       controller: 'entityTypeEditController'
     })
+    .when('/property-definitions', {
+      templateUrl: '/views/property-definition-list.html',
+      controller: 'propertyDefinitionListController'
+    })
+    .when('/property-definitions/add', {
+      templateUrl: '/views/property-definition-edit.html',
+      controller: 'propertyDefinitionEditController'
+    })
     .otherwise(
       { redirectTo: '/'}
     );
