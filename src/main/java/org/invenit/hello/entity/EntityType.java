@@ -3,10 +3,12 @@ package org.invenit.hello.entity;
 import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,6 +28,10 @@ public class EntityType {
     @Column(unique = true, nullable = false)
     private String code;
 
+    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @JoinColumn(nullable = false, name = "entity_type_id")
+    private List<PropertyDefinition> propertyDefinitions;
+
     public UUID getId() {
         return id;
     }
@@ -40,5 +46,13 @@ public class EntityType {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public List<PropertyDefinition> getPropertyDefinitions() {
+        return propertyDefinitions;
+    }
+
+    public void setPropertyDefinitions(List<PropertyDefinition> propertyDefinitions) {
+        this.propertyDefinitions = propertyDefinitions;
     }
 }

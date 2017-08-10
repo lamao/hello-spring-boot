@@ -9,12 +9,14 @@
     </div>
     <div class="row">
         <div>
-            <div class="col-sm-10">Code</div>
+            <div class="col-sm-8">Code</div>
+            <div class="col-sm-2">Property count</div>
             <div class="col-sm-2">Actions</div>
         </div>
         <hr/>
         <div ng-repeat="item in items">
-            <div class="col-sm-10">{{::item.code}}</div>
+            <div class="col-sm-8">{{::item.code}}</div>
+            <div class="col-sm-2">{{::item.propertyDefinitions.length}}</div>
             <div class="col-sm-2">
                 <a href="#/entity-types" class="btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-eye-open"></span> View

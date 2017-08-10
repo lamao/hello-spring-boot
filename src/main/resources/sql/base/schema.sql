@@ -11,18 +11,6 @@ create table authorities (
     unique (username, authority)
 );
 
-create table property_definition (
-    id uuid not null primary key,
-    code varchar(50) unique
-);
-
-create table property (
-  id uuid not null primary key,
-  value varchar(1024),
-  definition_id uuid not null,
-  foreign key (definition_id) references property_definition(id)
-);
-
 create table entity_type (
     id uuid not null primary key,
     code varchar(50) unique
@@ -33,3 +21,20 @@ create table entity (
     type_id uuid not null,
     foreign key (type_id) references entity_type(id)
 );
+
+create table property_definition (
+    id uuid not null primary key,
+    code varchar(50),
+    entity_type_id uuid not null,
+    foreign key (entity_type_id) references entity_type(id),
+    unique (code, entity_type_id)
+
+);
+
+create table property (
+  id uuid not null primary key,
+  value varchar(1024),
+  definition_id uuid not null,
+  foreign key (definition_id) references property_definition(id)
+);
+
