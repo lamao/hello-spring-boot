@@ -1,14 +1,14 @@
 package org.invenit.hello.entity;
 
-import org.hibernate.annotations.GenericGenerator;
+import java.util.UUID;
 
-import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * @author Vycheslav Mischeryakov (vmischeryakov@gmail.com)

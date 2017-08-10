@@ -16,6 +16,13 @@ create table property_definition (
     code varchar(50) unique
 );
 
+create table property (
+  id uuid not null primary key,
+  value varchar(1024),
+  definition_id uuid not null,
+  foreign key (definition_id) references property_definition(id)
+);
+
 create table entity_type (
     id uuid not null primary key,
     code varchar(50) unique

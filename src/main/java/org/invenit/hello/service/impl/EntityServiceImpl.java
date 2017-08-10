@@ -17,24 +17,29 @@ import org.springframework.stereotype.Service;
 public class EntityServiceImpl implements EntityService {
 
     private EntityRepository entityRepository;
-
     private EntityTypeRepository entityTypeRepository;
 
     @Autowired
-    public EntityServiceImpl(EntityRepository entityRepository, EntityTypeRepository entityTypeRepository) {
+    public EntityServiceImpl(
+                    EntityRepository entityRepository,
+                    EntityTypeRepository entityTypeRepository) {
         this.entityRepository = entityRepository;
         this.entityTypeRepository = entityTypeRepository;
     }
 
     @Override
     public void add(Entity entity) {
+
+        entityRepository.save(entity);
+    }
+
+    void enrichBeforeAdd(Entity entity) {
         String typeCode = entity.getType().getCode();
         EntityType entityType = entityTypeRepository.findByCode(typeCode);
         if (entityType == null) {
             throw new IllegalArgumentException(String.format("Entity type [%s] not found", typeCode));
         }
         entity.setType(entityType);
-        entityRepository.save(entity);
     }
 
     @Override
