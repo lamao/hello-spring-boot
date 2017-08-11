@@ -21,4 +21,17 @@ app.controller('entityEditController', ['$scope', '$http', '$location', function
       });
   };
 
+  $scope.onChangeType = function() {
+    var entityTypeId = $scope.item.type.id;
+    $http.get("/api/entity-type/" + entityTypeId + "/property-definitions")
+      .then(function(response) {
+        var propertyDefinitions = response.data.content;
+        $scope.item.properties = _.map(propertyDefinitions, function(it) {
+          return {
+            definition: it
+          }
+        });
+      });
+  };
+
 }]);

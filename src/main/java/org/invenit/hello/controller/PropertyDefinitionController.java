@@ -1,5 +1,7 @@
 package org.invenit.hello.controller;
 
+import org.invenit.hello.dto.converter.PropertyDefinitionConverter;
+import org.invenit.hello.dto.model.PropertyDefinitionDto;
 import org.invenit.hello.entity.PropertyDefinition;
 import org.invenit.hello.service.PropertyDefinitionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +24,23 @@ public class PropertyDefinitionController {
 
     private PropertyDefinitionService propertyDefinitionService;
 
+    private PropertyDefinitionConverter propertyDefinitionConverter;
+
     @Autowired
-    public PropertyDefinitionController(PropertyDefinitionService propertyDefinitionService) {
+    public PropertyDefinitionController(
+                    PropertyDefinitionService propertyDefinitionService,
+                    PropertyDefinitionConverter propertyDefinitionConverter) {
         this.propertyDefinitionService = propertyDefinitionService;
+        this.propertyDefinitionConverter = propertyDefinitionConverter;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity add(@RequestBody PropertyDefinition entityType) {
-        if (entityType == null) {
+    public ResponseEntity add(@RequestBody PropertyDefinitionDto dto) {
+        if (dto == null) {
             return ResponseEntity.badRequest().body("Empty content");
         } else {
-            propertyDefinitionService.add(entityType);
+            PropertyDefinition model = propertyDefinitionConverter.convertFrom(dto);
+            propertyDefinitionService.add(model);
             return ResponseEntity.ok().build();
         }
     }
@@ -40,6 +48,7 @@ public class PropertyDefinitionController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getPage() {
         Page<PropertyDefinition> page = propertyDefinitionService.get(new PageRequest(0, 100));
-        return ResponseEntity.ok(page);
+        Page<PropertyDefinitionDto> result = page.map(propertyDefinitionConverter::convertTo);
+        return ResponseEntity.ok(result);
     }
 }

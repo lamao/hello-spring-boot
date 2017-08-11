@@ -8,6 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
+
 /**
  * @author Vycheslav Mischeryakov (vmischeryakov@gmail.com)
  */
@@ -29,5 +32,10 @@ public class PropertyDefinitionServiceImpl implements PropertyDefinitionService 
     @Override
     public Page<PropertyDefinition> get(PageRequest request) {
         return propertyDefinitionRepository.findAll(request);
+    }
+
+    @Override
+    public List<PropertyDefinition> getByEntityTypeId(UUID entityTypeId) {
+        return propertyDefinitionRepository.findByEntityTypeId(entityTypeId);
     }
 }

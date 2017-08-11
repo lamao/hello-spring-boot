@@ -21,6 +21,10 @@ public class PropertyDefinition {
     @Column(unique = true, nullable = false)
     private String code;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "entity_type_id", nullable = false, updatable = false, insertable = false)
+    private EntityType entityType;
+
     public UUID getId() {
         return id;
     }
@@ -35,5 +39,13 @@ public class PropertyDefinition {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public EntityType getEntityType() {
+        return entityType;
+    }
+
+    public void setEntityType(EntityType entityType) {
+        this.entityType = entityType;
     }
 }

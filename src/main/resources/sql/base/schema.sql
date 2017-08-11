@@ -34,7 +34,9 @@ create table property_definition (
 create table property (
   id uuid not null primary key,
   value varchar(1024),
+  entity_id uuid not null,
   definition_id uuid not null,
+  foreign key(entity_id) references entity(id),
   foreign key (definition_id) references property_definition(id)
 );
 

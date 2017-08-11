@@ -1,9 +1,21 @@
 <div class="section">
     <div class="form-group">
         <label class="control-label">Type</label>
-        <select class="form-control" ng-model="item.type">
+        <select class="form-control" ng-model="item.type" ng-change="onChangeType()">
             <option ng-repeat="entityType in entityTypes" ng-value="entityType">{{::entityType.code}}</option>
         </select>
+    </div>
+
+    <hr/>
+    <div class="section">
+        <div class="row">
+            <div ng-repeat="property in item.properties">
+                <div class="col-sm-12">
+                    <label>{{property.definition.code}}</label>
+                    <input type="text" ng-model="property.value" class="form-control">
+                </div>
+            </div>
+        </div>
     </div>
 
     <button class="btn btn-default btn-sm" ng-click="onSave()">

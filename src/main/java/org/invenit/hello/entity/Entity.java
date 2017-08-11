@@ -1,11 +1,14 @@
 package org.invenit.hello.entity;
 
+import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -25,6 +28,10 @@ public class Entity {
     @JoinColumn(name = "type_id", nullable = false)
     private EntityType type;
 
+    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @JoinColumn(nullable = false, name = "entity_id")
+    private List<Property> properties;
+
     public UUID getId() {
         return id;
     }
@@ -39,5 +46,13 @@ public class Entity {
 
     public void setType(EntityType type) {
         this.type = type;
+    }
+
+    public List<Property> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(List<Property> properties) {
+        this.properties = properties;
     }
 }
