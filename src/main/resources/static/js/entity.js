@@ -34,7 +34,7 @@ app.controller('entityEditController', ['$scope', '$http', '$location', function
     var entityTypeId = $scope.item.type.id;
     $http.get("/api/entity-type/" + entityTypeId + "/property-definitions")
       .then(function(response) {
-        var propertyDefinitions = response.data.content;
+        var propertyDefinitions = response.data;
         $scope.item.properties = _.map(propertyDefinitions, function(it) {
           return {
             definition: it

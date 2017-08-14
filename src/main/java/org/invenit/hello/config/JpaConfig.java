@@ -2,8 +2,10 @@ package org.invenit.hello.config;
 
 import java.util.Properties;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
+import org.hsqldb.util.DatabaseManagerSwing;
 import org.invenit.hello.Application;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +32,13 @@ public class JpaConfig implements TransactionManagementConfigurer {
     private String dialect;
     @Value("${hibernate.hbm2ddl.auto}")
     private String hbm2ddlAuto;
+
+    @PostConstruct
+    public void getDbManager(){
+        System.setProperty("java.awt.headless", "false");
+        DatabaseManagerSwing.main(
+            new String[] { "--url", "jdbc:hsqldb:mem:testdb", "--user", "sa", "--password", ""});
+    }
 
     @Bean
     public DataSource configureDataSource() {

@@ -57,6 +57,7 @@ public class EntityController {
 
     @DeleteMapping("{id}")
     public ResponseEntity remove(@PathVariable UUID id) {
+        entityService.remove(id);
         return ResponseEntity.ok().build();
     }
 }

@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 /**
  * @author Vycheslav Mischeryakov (vmischeryakov@gmail.com)
  */
@@ -60,5 +62,14 @@ public class EntityServiceImpl implements EntityService {
     @Override
     public Page<Entity> get(PageRequest request) {
         return entityRepository.findAll(request);
+    }
+
+    @Override
+    public void remove(UUID id) {
+        Entity entity = entityRepository.findOne(id);
+        if (entity == null) {
+            throw new IllegalArgumentException(String.format("Entity #%s not found", id));
+        }
+        entityRepository.delete(id);
     }
 }
