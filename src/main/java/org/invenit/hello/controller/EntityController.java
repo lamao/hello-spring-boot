@@ -1,5 +1,7 @@
 package org.invenit.hello.controller;
 
+import java.util.UUID;
+
 import org.invenit.hello.dto.converter.EntityConverter;
 import org.invenit.hello.dto.model.EntityDto;
 import org.invenit.hello.entity.Entity;
@@ -9,14 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Vycheslav Mischeryakov (vmischeryakov@gmail.com)
@@ -29,7 +30,9 @@ public class EntityController {
     private EntityConverter entityConverter;
 
     @Autowired
-    public EntityController(EntityService entityService, EntityConverter entityConverter) {
+    public EntityController(
+                    EntityService entityService,
+                    EntityConverter entityConverter) {
         this.entityService = entityService;
         this.entityConverter = entityConverter;
     }
@@ -50,5 +53,10 @@ public class EntityController {
         Page<Entity> page = entityService.get(new PageRequest(0, 50));
         Page<EntityDto> result = page.map(entityConverter::convertTo);
         return ResponseEntity.ok(result);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity remove(@PathVariable UUID id) {
+        return ResponseEntity.ok().build();
     }
 }

@@ -1,7 +1,16 @@
 app.controller('entityListController', ['$scope', '$http', '$q', 'constants', function($scope, $http, $q, constants) {
   $http.get("/api/entity").then(function(response){
     $scope.items = response.data.content;
-  })
+  });
+
+  $scope.onRemove = function(itemId) {
+    $http.delete("/api/entity/" + itemId).then(function(response) {
+      _.remove($scope.items, function(it) {
+        return it.id == itemId;
+      });
+    });
+  };
+
 }]);
 
 app.controller('entityEditController', ['$scope', '$http', '$location', function($scope, $http, $location) {
