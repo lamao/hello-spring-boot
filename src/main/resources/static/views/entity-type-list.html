@@ -19,8 +19,11 @@
             <div class="col-sm-2">{{::item.propertyDefinitions.length}}</div>
             <div class="col-sm-2">
                 <a href="#/entity-types" class="btn btn-default btn-sm">
-                    <span class="glyphicon glyphicon-eye-open"></span> View
+                    <span class="glyphicon glyphicon-eye-open"></span>
                 </a>
+                <button class="btn btn-default btn-sm" ng-click="onRemove(item.id)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
             </div>
         </div>
     </div>
