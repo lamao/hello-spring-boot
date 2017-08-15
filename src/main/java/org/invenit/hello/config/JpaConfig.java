@@ -33,12 +33,12 @@ public class JpaConfig implements TransactionManagementConfigurer {
     @Value("${hibernate.hbm2ddl.auto}")
     private String hbm2ddlAuto;
 
-    @PostConstruct
-    public void getDbManager(){
-        System.setProperty("java.awt.headless", "false");
-        DatabaseManagerSwing.main(
-            new String[] { "--url", "jdbc:hsqldb:mem:testdb", "--user", "sa", "--password", ""});
-    }
+//    @PostConstruct
+//    public void getDbManager(){
+//        System.setProperty("java.awt.headless", "false");
+//        DatabaseManagerSwing.main(
+//            new String[] { "--url", "jdbc:hsqldb:mem:testdb", "--user", "sa", "--password", ""});
+//    }
 
     @Bean
     public DataSource configureDataSource() {

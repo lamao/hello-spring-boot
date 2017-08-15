@@ -4,11 +4,8 @@ import org.invenit.hello.entity.Entity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 /**
  * @author Vycheslav Mischeryakov (vmischeryakov@gmail.com)
  */
 @Repository
-public interface EntityRepository extends JpaRepository<Entity, UUID> {
-}
+public interface EntityRepository extends JpaRepository<Entity, Long> {}

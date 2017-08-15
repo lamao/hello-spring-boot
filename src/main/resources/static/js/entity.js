@@ -44,3 +44,9 @@ app.controller('entityEditController', ['$scope', '$http', '$location', function
   };
 
 }]);
+
+app.controller("entityCardController", ["$scope", "$http", "$routeParams", function($scope, $http, $routeParams) {
+  $http.get("/api/entity/" + $routeParams.id).then(function(response) {
+      $scope.item = response.data;
+  });
+}]);

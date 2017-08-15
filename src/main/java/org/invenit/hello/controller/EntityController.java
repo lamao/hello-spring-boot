@@ -1,7 +1,5 @@
 package org.invenit.hello.controller;
 
-import java.util.UUID;
-
 import org.invenit.hello.dto.converter.EntityConverter;
 import org.invenit.hello.dto.model.EntityDto;
 import org.invenit.hello.entity.Entity;
@@ -37,6 +35,21 @@ public class EntityController {
         this.entityConverter = entityConverter;
     }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getPage() {
+        Page<Entity> page = entityService.get(new PageRequest(0, 50));
+        Page<EntityDto> result = page.map(entityConverter::convertTo);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getOne(@PathVariable("id") Long id) {
+        Entity model = entityService.get(id);
+        EntityDto dto = entityConverter.convertTo(model);
+        return ResponseEntity.ok(dto);
+    }
+
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity add(@RequestBody EntityDto dto) {
         if (dto == null) {
@@ -48,15 +61,8 @@ public class EntityController {
         }
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getPage() {
-        Page<Entity> page = entityService.get(new PageRequest(0, 50));
-        Page<EntityDto> result = page.map(entityConverter::convertTo);
-        return ResponseEntity.ok(result);
-    }
-
     @DeleteMapping("{id}")
-    public ResponseEntity remove(@PathVariable UUID id) {
+    public ResponseEntity remove(@PathVariable Long id) {
         entityService.remove(id);
         return ResponseEntity.ok().build();
     }

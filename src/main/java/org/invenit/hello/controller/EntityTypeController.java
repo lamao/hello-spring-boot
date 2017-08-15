@@ -1,7 +1,6 @@
 package org.invenit.hello.controller;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.invenit.hello.dto.converter.EntityTypeConverter;
@@ -70,7 +69,7 @@ public class EntityTypeController {
     }
 
     @GetMapping(path = "/{id}/property-definitions", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getPropertyDefinitions(@PathVariable("id") UUID id) {
+    public ResponseEntity getPropertyDefinitions(@PathVariable("id") Long id) {
         List<PropertyDefinition> propertyDefinitions = propertyDefinitionService
                         .getByEntityTypeId(id);
         List<PropertyDefinitionDto> result = propertyDefinitions.stream()
@@ -79,7 +78,7 @@ public class EntityTypeController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity remove(@PathVariable UUID id) {
+    public ResponseEntity remove(@PathVariable Long id) {
         entityTypeService.remove(id);
         return ResponseEntity.ok().build();
     }

@@ -8,6 +8,10 @@ app.config(function($locationProvider, $routeProvider) {
       templateUrl: '/views/entity-list.html',
       controller: 'entityListController'
     })
+    .when("/entity/:id", {
+      templateUrl: "/views/entity-card.html",
+      controller: "entityCardController"
+    })
     .when('/entities/add', {
       templateUrl: '/views/entity-edit.html',
       controller: 'entityEditController'

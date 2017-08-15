@@ -1,0 +1,19 @@
+<div class="section">
+    <div class="form-group">
+        <label class="control-label">{{item.type.code}}</label>
+    </div>
+
+    <hr/>
+    <div class="section">
+        <div class="row">
+            <div ng-repeat="property in item.properties">
+                <div class="col-sm-3">
+                    <label>{{property.definition.code}}</label>
+                </div>
+                <div class="col-sm-9">
+                    <label>{{property.value}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

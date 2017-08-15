@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Vycheslav Mischeryakov (vmischeryakov@gmail.com)
@@ -35,7 +34,7 @@ public class PropertyDefinitionServiceImpl implements PropertyDefinitionService 
     }
 
     @Override
-    public List<PropertyDefinition> getByEntityTypeId(UUID entityTypeId) {
+    public List<PropertyDefinition> getByEntityTypeId(Long entityTypeId) {
         return propertyDefinitionRepository.findByEntityTypeId(entityTypeId);
     }
 }
