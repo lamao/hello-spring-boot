@@ -13,9 +13,19 @@ app.controller('entityListController', ['$scope', '$http', '$q', 'constants', fu
 
 }]);
 
-app.controller('entityEditController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('entityEditController', ['$scope', '$http', '$location', '$routeParams', 'configuration',
+  function($scope, $http, $location, $routeParams, configuration) {
 
-  $scope.item = {};
+  $scope.isAdd = !configuration.isEdit;
+  $scope.isEdit = configuration.isEdit;
+
+  if ($scope.isAdd) {
+    $scope.item = {};
+  } else {
+    $http.get("/api/entity/" + $routeParams.id).then(function(response) {
+      $scope.item = response.data;
+    });
+  }
 
   $http.get("/api/entity-type")
     .then(function(response) {

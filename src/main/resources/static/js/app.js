@@ -12,9 +12,23 @@ app.config(function($locationProvider, $routeProvider) {
       templateUrl: "/views/entity-card.html",
       controller: "entityCardController"
     })
+    .when("/entity/:id/edit", {
+      templateUrl: "/views/entity-edit.html",
+      controller: 'entityEditController',
+      resolve: {
+        configuration: function() {
+          return {isEdit: true}
+        }
+      }
+    })
     .when('/entities/add', {
       templateUrl: '/views/entity-edit.html',
-      controller: 'entityEditController'
+      controller: 'entityEditController',
+      resolve: {
+        configuration: function() {
+          return {isEdit: false};
+        }
+      }
     })
     .when('/entity-types', {
       templateUrl: '/views/entity-type-list.html',

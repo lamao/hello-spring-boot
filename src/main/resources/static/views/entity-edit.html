@@ -1,8 +1,12 @@
 <div class="section">
     <div class="form-group">
         <label class="control-label">Type</label>
-        <select class="form-control" ng-model="item.type" ng-change="onChangeType()">
-            <option ng-repeat="entityType in entityTypes" ng-value="entityType">{{::entityType.code}}</option>
+        <select class="form-control" ng-model="item.type" ng-change="onChangeType()"ng-disabled="isEdit">
+            <option ng-repeat="entityType in ::entityTypes track by entityType.id"
+                    ng-value="entityType"
+                    ng-selected="entityType.id == item.type.id">
+                {{::entityType.code}}
+            </option>
         </select>
     </div>
 
