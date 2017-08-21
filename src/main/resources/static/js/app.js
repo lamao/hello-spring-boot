@@ -46,6 +46,10 @@ app.config(function($locationProvider, $routeProvider) {
       templateUrl: '/views/property-definition-edit.html',
       controller: 'propertyDefinitionEditController'
     })
+    .when("/dev/page", {
+      templateUrl: "/views/dev-page.html",
+      controller: "devPageController"
+    })
     .otherwise(
       { redirectTo: '/'}
     );
