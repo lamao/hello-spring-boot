@@ -40,3 +40,8 @@ create table property (
   foreign key (definition_id) references property_definition(id)
 );
 
+create table script (
+  code varchar(50) primary key,
+  content clob not null
+);
+
