@@ -28,16 +28,20 @@ public class ScriptServiceImpl implements ScriptService {
 
     @Override
     public Script get(String code) {
-        return null;
+        return scriptRepository.findOne(code);
     }
 
     @Override
     public void add(Script script) {
-
+        scriptRepository.save(script);
     }
 
     @Override
     public void remove(String code) {
-
+        Script entity = scriptRepository.findOne(code);
+        if (entity == null) {
+            throw new IllegalArgumentException(String.format("Script [%s] not found", code));
+        }
+        scriptRepository.delete(code);
     }
 }

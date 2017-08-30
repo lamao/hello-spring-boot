@@ -45,17 +45,20 @@ public class ScriptController {
 
     @GetMapping(path = "{code}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getOne(@PathVariable String code) {
-        throw new UnsupportedOperationException("Not implemented");
+        Script entity = scriptService.get(code);
+        ScriptDto dto = scriptConverter.convertTo(entity);
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void add(@RequestBody ScriptDto dto) {
-        throw new UnsupportedOperationException("Not implemented");
+        Script entity = scriptConverter.convertFrom(dto);
+        scriptService.add(entity);
     }
 
     @DeleteMapping(path = "{code}")
     public void remove(@PathVariable String code) {
-        throw new UnsupportedOperationException("Not implemented");
+        scriptService.remove(code);
     }
 
 }
