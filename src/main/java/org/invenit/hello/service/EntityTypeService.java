@@ -12,5 +12,7 @@ public interface EntityTypeService {
 
     Page<EntityType> get(PageRequest request);
 
+    EntityType get(Long id);
+
     void remove(Long id);
 }

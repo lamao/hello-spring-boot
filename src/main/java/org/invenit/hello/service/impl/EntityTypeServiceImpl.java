@@ -28,6 +28,11 @@ public class EntityTypeServiceImpl implements EntityTypeService {
     }
 
     @Override
+    public EntityType get(Long id) {
+        return entityTypeRepository.findOne(id);
+    }
+
+    @Override
     public void remove(Long id) {
         EntityType entityType = entityTypeRepository.findOne(id);
         if (entityType == null) {

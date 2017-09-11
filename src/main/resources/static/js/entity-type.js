@@ -32,3 +32,9 @@ app.controller('entityTypeEditController', ['$scope', '$http', '$location', func
   };
 
 }]);
+
+app.controller("entityTypeCardController", ["$scope", "$http", "$routeParams", function($scope, $http, $routeParams) {
+  $http.get("/api/entity-type/" + $routeParams.id).then(function(response) {
+    $scope.item = response.data;
+  });
+}]);

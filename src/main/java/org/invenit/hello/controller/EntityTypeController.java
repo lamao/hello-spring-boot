@@ -68,6 +68,13 @@ public class EntityTypeController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getOne(@PathVariable("id") Long id) {
+        EntityType model = entityTypeService.get(id);
+        EntityTypeDto dto = entityTypeConverter.convertTo(model);
+        return ResponseEntity.ok(dto);
+    }
+
     @GetMapping(path = "/{id}/property-definitions", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getPropertyDefinitions(@PathVariable("id") Long id) {
         List<PropertyDefinition> propertyDefinitions = propertyDefinitionService
